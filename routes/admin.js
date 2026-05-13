@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const wrapAsync = require('../utils/wrapasync.js');
 const { isLogged, isAdmin } = require('../middleware.js');
-const adminController = require('../controllers/admin.js');
+const adminController = require('../Controllers/admin.js');
 
 router.get('/admin/dashboard', isLogged, isAdmin, wrapAsync(adminController.dashboard));
 router.delete('/admin/users/:id', isLogged, isAdmin, wrapAsync(adminController.deleteUser));
