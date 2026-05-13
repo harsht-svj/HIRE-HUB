@@ -1,6 +1,5 @@
-
-const cloudinary = require('cloudinary');
-const CloudinaryStorage = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -10,8 +9,10 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
-    folder: 'hirehub',
-    allowedFormats: ['jpg', 'jpeg', 'png'],
+    params: {
+        folder: 'hirehub',
+        allowed_formats: ['jpg', 'jpeg', 'png'],
+    },
 });
 
 module.exports = { cloudinary, storage };
