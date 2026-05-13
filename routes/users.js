@@ -3,7 +3,7 @@ const router = express.Router(); // Create a router instance
 const passport=require('passport');
 const LocalStrategy = require("passport-local").Strategy; 
 const User = require('../models/user');
-const wrapasync = require('../utils/wrapAsync.js');
+const wrapasync = require('../utils/wrapasync.js');
 const ControllerUser=require('../Controllers/users.js');
 const multer = require('../utils/multer.js');
 

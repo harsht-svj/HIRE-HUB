@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router(); // Create a router instance
 const Job = require('../models/job.js');
 const {isLogged,iscompany,isApplicant}=require('../middleware.js');
-const wrapAsync = require('../utils/wrapAsync.js');
+const wrapAsync = require('../utils/wrapasync.js');
 const ExpressError = require('../utils/ExpressError.js');
 const jobController=require('../Controllers/jobs.js');
 

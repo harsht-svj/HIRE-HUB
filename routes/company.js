@@ -3,7 +3,7 @@ const router=express.Router();
 const Job=require('../models/job.js');
 
 const { isLogged, iscompany } = require('../middleware.js');
-const wrapasync = require('../utils/wrapAsync.js');
+const wrapasync = require('../utils/wrapasync.js');
 const ExpressError = require('../utils/ExpressError.js');
 const ControllerCompany= require('../Controllers/company.js');
 
