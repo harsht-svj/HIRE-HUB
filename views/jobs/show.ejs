@@ -1,0 +1,90 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row justify-content-center my-4">
+    <div class="col-md-8">
+        <div style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:28px;">
+
+            <!-- TITLE ROW -->
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h2 class="fw-bold mb-1"><%= job.title %></h2>
+                    <p style="color:rgba(255,255,255,0.5); margin:0;">🏢 <%= job.postedBy.companyName %></p>
+                </div>
+                <span class="badge-<%= job.jobType %>"><%= job.jobType %></span>
+            </div>
+
+            <hr style="border-color:rgba(255,255,255,0.08);">
+
+            <!-- INFO ROW -->
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <p style="color:rgba(255,255,255,0.45); font-size:13px; margin-bottom:4px;">Location</p>
+                    <p class="fw-bold mb-0">📍 <%= job.location %></p>
+                </div>
+                <% if(job.salary) { %>
+                <div class="col-md-4">
+                    <p style="color:rgba(255,255,255,0.45); font-size:13px; margin-bottom:4px;">Salary</p>
+                    <p class="fw-bold mb-0">💰 <%= job.salary %></p>
+                </div>
+                <% } %>
+                <% if(job.postedBy.companyWebsite) { %>
+                <div class="col-md-4">
+                    <p style="color:rgba(255,255,255,0.45); font-size:13px; margin-bottom:4px;">Website</p>
+                    <a href="/jobs/<%= job._id %>/companyprofile"
+                        style="color:#7aa4f7; text-decoration:none; font-weight:600;"
+                        target="_blank">Visit →</a>
+                </div>
+                <% } %>
+
+            </div>
+
+
+
+            <hr style="border-color:rgba(255,255,255,0.08);">
+
+            <!-- SKILLS -->
+            <h5 class="fw-bold mb-2">Skills Required</h5>
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <% for(let skill of job.skillsRequired) { %>
+                    <span class="skill-tag"><%= skill %></span>
+                <% } %>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <h5 class="fw-bold mb-2">Job Description</h5>
+            <p style="color:rgba(255,255,255,0.6); line-height:1.7;"><%= job.description %></p>
+
+            <hr style="border-color:rgba(255,255,255,0.08);">
+
+            <!-- BUTTONS -->
+            <div class="d-flex gap-2">
+                <% if(currUser && currUser.role === 'applicant') { %>
+                    <%
+                        let alreadyApplied = job.applications.some(
+                            app => app.applicant.toString() === currUser._id.toString()
+                        );
+                    %>
+                    <% if(alreadyApplied) { %>
+                        <button class="btn px-4" disabled
+                            style="background:#0f2a1e; color:#5dcaa5; border:1px solid #5dcaa5; border-radius:8px;">
+                            ✅ Already Applied
+                        </button>
+                    <% } else { %>
+                        <form action="/jobs/<%= job._id %>/apply" method="POST">
+                            <button type="submit" class="btn px-4"
+                                style="background:#4f6ef7; color:#fff; border:none; border-radius:8px;">
+                                Apply Now 🚀
+                            </button>
+                        </form>
+                    <% } %>
+                <% } %>
+
+                <a href="/jobs" class="btn px-4"
+                    style="background:transparent; color:rgba(255,255,255,0.6); border:1px solid rgba(255,255,255,0.15); border-radius:8px;">
+                    ← Back to Jobs
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<% layout('layouts/boilerplate') %>
+
+<!-- HERO -->
+<div class="hero-section">
+    <h1>Find Your Dream Job</h1>
+    <p>Connect with top companies. Apply to jobs that match your skills. Get hired faster.</p>
+    <a href="/jobs" class="btn btn-primary btn-lg me-3">Browse Jobs</a>
+    <% if(!currUser) { %>
+        <a href="/register" class="btn btn-outline-light btn-lg">Register Now</a>
+    <% } %>
+</div>
+
+<!-- STATS -->
+<div class="row g-4 my-2">
+    <div class="col-md-4">
+        <div class="stat-card">
+            <h2 class="text-primary">500+</h2>
+            <p>Jobs Posted</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card">
+            <h2 class="text-success">200+</h2>
+            <p>Companies</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card">
+            <h2 class="text-warning">1000+</h2>
+            <p>Applicants Hired</p>
+        </div>
+    </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<h2 class="text-center fw-bold my-4">How It Works</h2>
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="step-card">
+            <div class="icon">📝</div>
+            <h5>Create Account</h5>
+            <p>Register as an applicant or company in seconds</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="step-card">
+            <div class="icon">🔍</div>
+            <h5>Browse Jobs</h5>
+            <p>Explore hundreds of listings from top companies</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="step-card">
+            <div class="icon">🚀</div>
+            <h5>Get Hired</h5>
+            <p>Apply with one click and track your application status</p>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<% if(!currUser) { %>
+<div class="cta-section">
+    <h3>Ready to get started?</h3>
+    <p>Join thousands of applicants and companies on Hire Hub</p>
+    <a href="/register" class="btn btn-primary btn-lg me-3">Register as Applicant</a>
+    <a href="/register" class="btn btn-outline-light btn-lg">Register as Company</a>
+</div>
+<% } %>

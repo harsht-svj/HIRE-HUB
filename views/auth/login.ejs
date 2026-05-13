@@ -1,0 +1,66 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row justify-content-center my-5">
+    <div class="col-md-5">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px;">
+
+            <!-- ICON TOP -->
+            <div class="text-center mb-3">
+                <div class="mx-auto mb-3 d-flex align-items-center justify-content-center" 
+                    style="width:56px; height:56px; background:#e8f0fe; border-radius:50%; font-size:24px;">
+                    🏢
+                </div>
+                <h3 class="fw-bold mb-1">Welcome Back</h3>
+                <p class="text-muted">Login to your Hire Hub account</p>
+            </div>
+
+            <form action="/login" method="POST">
+
+                <!-- EMAIL -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">
+                            ✉️
+                        </span>
+                        <input type="email" name="email" 
+                            class="form-control border-start-0 ps-0"
+                            placeholder="you@example.com" required>
+                    </div>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">
+                            🔒
+                        </span>
+                        <input type="password" name="password" 
+                            class="form-control border-start-0 ps-0"
+                            placeholder="Enter your password" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+                    Login
+                </button>
+
+            </form>
+
+            <!-- DIVIDER -->
+            <div class="d-flex align-items-center my-3">
+                <hr class="flex-grow-1">
+                <span class="px-2 text-muted" style="font-size: 13px;">or</span>
+                <hr class="flex-grow-1">
+            </div>
+
+            <div class="text-center">
+                <p class="text-muted mb-0" style="font-size: 14px;">Don't have an account?
+                    <a href="/register" class="text-primary text-decoration-none fw-bold">Register</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>

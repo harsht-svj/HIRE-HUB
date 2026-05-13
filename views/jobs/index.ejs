@@ -1,0 +1,184 @@
+<% layout('layouts/boilerplate') %>
+<style>
+.job-card {
+    background: #30302E !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+    height: 100%;
+    color: #fff;
+}
+.job-card:hover {
+    border-color: #4f6ef7 !important;
+    transform: translateY(-2px);
+}
+.badge-full-time  { background: #1a2a4a; color: #7aa4f7; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+.badge-part-time  { background: #2a1a2e; color: #d48fb0; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+.badge-internship { background: #0f2a1e; color: #5dcaa5; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+.badge-remote     { background: #2a1f0f; color: #f0b35b; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+.skill-tag {
+    background:#30302E;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+}
+.search-box {
+    background: #30302E;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    color: #fff;
+}
+.search-box:focus { border-color: #4f6ef7; box-shadow: 0 0 0 3px rgba(79,110,247,0.15); }
+.search-box::placeholder { color: rgba(255,255,255,0.3); }
+.filter-chip {
+    background: #1c1c1e;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.filter-chip:hover  { border-color: #4f6ef7; color: #4f6ef7; }
+.filter-chip.active { background: #1a2a4a; border-color: #4f6ef7; color: #7aa4f7; font-weight: 500; }
+</style>
+
+<!-- HEADER -->
+<div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <div>
+        <h2 class="fw-bold mb-0">All Jobs</h2>
+        <p class="text-muted mb-0">Find your next opportunity</p>
+    </div>
+    <% if(currUser && currUser.role === 'company') { %>
+        <a href="/jobs/new" class="btn btn-primary px-4">+ Post New Job</a>
+    <% } %>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="mb-3">
+    <input type="text" id="searchInput" class="search-box"
+        placeholder="🔍  Search jobs by title, company or location...">
+</div>
+
+<!-- FILTER CHIPS -->
+<div class="d-flex gap-2 flex-wrap mb-3">
+    <span class="filter-chip active" onclick="filterJobs('all', this)">All</span>
+    <span class="filter-chip" onclick="filterJobs('full-time', this)">Full Time</span>
+    <span class="filter-chip" onclick="filterJobs('part-time', this)">Part Time</span>
+    <span class="filter-chip" onclick="filterJobs('internship', this)">Internship</span>
+    <span class="filter-chip" onclick="filterJobs('remote', this)">Remote</span>
+</div>
+
+<!-- JOB COUNT -->
+<p class="text-muted mb-3" id="jobCount">Showing <%= jobs.length %> jobs</p>
+
+<!-- JOB CARDS -->
+<% if(jobs.length === 0) { %>
+    <div class="text-center py-5">
+        <h4 class="text-muted">No jobs posted yet</h4>
+        <p class="text-muted">Check back later!</p>
+    </div>
+<% } else { %>
+    <div class="row g-3 mb-5" id="jobsGrid">
+        <% for(let job of jobs) { %>
+            <div class="col-md-6 job-item" data-type="<%= job.jobType %>">
+                <div class="job-card h-100">
+
+                    <!-- TOP ROW -->
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="fw-bold mb-0"><%= job.title %></h5>
+                        <span class="badge-<%= job.jobType %>"><%= job.jobType %></span>
+                    </div>
+
+                    <!-- COMPANY + LOCATION -->
+                    <p class="text-muted mb-1" style="font-size:14px;">🏢 <%= job.postedBy.companyName %></p>
+                    <p class="text-muted mb-2" style="font-size:14px;">📍 <%= job.location %></p>
+
+                    <!-- SKILLS -->
+                    <div class="d-flex flex-wrap gap-1 mb-3">
+                        <% if(job.skillsRequired && job.skillsRequired.length > 0) { %>
+                            <% for(let skill of job.skillsRequired.slice(0,4)) { %>
+                                <span class="skill-tag"><%= skill %></span>
+                            <% } %>
+                            <% if(job.skillsRequired.length > 4) { %>
+                                <span class="skill-tag">+<%= job.skillsRequired.length - 4 %> more</span>
+                            <% } %>
+                        <% } %>
+                    </div>
+                    <!-- APPLICANT COUNT -->
+<div class="mb-2">
+    <span style="color:rgba(255,255,255,0.45); font-size:13px;">
+        👥 <%= job.applications.length %> 
+        <%= job.applications.length === 1 ? 'applicant' : 'applicants' %>
+    </span>
+</div>
+                    <!-- FOOTER -->
+                    <div class="d-flex justify-content-between align-items-center pt-2"
+                        style="border-top: 1px solid #e9ecef;">
+                        
+                        <% if(job.salary) { %>
+                            <span class="fw-bold" style="font-size:14px;">💰 <%= job.salary %></span>
+                        <% } else { %>
+                            <span class="text-muted" style="font-size:14px;">Salary not specified</span>
+                        <% } %>
+                        <a  href="/jobs/<%= job._id %>" class="btn btn-sm"
+                            style="border: 1px solid ; color: whITE; border-radius: 8px;">
+                            View Details →
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        <% } %>
+    </div>
+<% } %>
+<script>
+function filterJobs(type, el) {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+
+    const items = document.querySelectorAll('.job-item');
+    let count = 0;
+
+    items.forEach(item => {
+        const itemType = item.dataset.type.toLowerCase().replace(' ', '-');
+        if (type === 'all' || itemType === type) {
+            item.style.display = 'block';
+            count++;
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+    // ✅ update count INSIDE filterJobs but OUTSIDE forEach
+    document.getElementById('jobCount').textContent = `Showing ${count} jobs`;
+}
+
+// ✅ search listener OUTSIDE filterJobs function
+document.getElementById('searchInput').addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    const items = document.querySelectorAll('.job-item');
+    let count = 0;
+
+    items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        if (text.includes(query)) {
+            item.style.display = 'block';
+            count++;
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+    document.getElementById('jobCount').textContent = `Showing ${count} jobs`;
+});
+</script>

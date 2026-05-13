@@ -1,0 +1,8 @@
+node_modules/
+.env
+
+//THESE TWO WILL NOT BE SHRED ON GIT 
+
+// 1. Too heavy     → node_modules (50,000+ files)
+// 2. Secret        → .env (passwords, keys)
+// 3. Auto-generated → doesn't need to be shared

@@ -1,0 +1,89 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row justify-content-center my-4">
+    <div class="col-md-8">
+
+        <!-- COMPANY HEADER CARD -->
+        <div class="p-4 mb-4" 
+            style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:16px;">
+            <div class="d-flex align-items-center gap-4">
+                
+                <!-- LOGO -->
+                <img src="<%= company.avatar || 'https://res.cloudinary.com/demo/image/upload/v1/samples/people/smiling-man.jpg' %>"
+                    style="width:110px; height:110px; border-radius:12px; object-fit:cover; border:2px solid #4f6ef7;">
+                
+                <!-- INFO -->
+                <div>
+                    <h2 class="fw-bold mb-1"><%= company.companyName %></h2>
+                    <p style="color:#7aa4f7; font-size:14px; margin-bottom:12px;">🏢 Company</p>
+
+                    <div class="d-flex gap-4 flex-wrap">
+                        <div>
+                            <p style="color:rgba(255,255,255,0.4); font-size:12px; margin-bottom:2px;">Email</p>
+                            <p style="color:#fff; font-size:13px; margin:0;"><%= company.email %></p>
+                        </div>
+                        <div>
+                            <p style="color:rgba(255,255,255,0.4); font-size:12px; margin-bottom:2px;">Jobs Posted</p>
+                            <p style="color:#fff; font-weight:600; margin:0;"><%= companyJobs.length %></p>
+                        </div>
+                        <% if(company.companyWebsite) { %>
+                   
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIVE JOB LISTINGS -->
+        <div class="p-4 mb-4"
+            style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:16px;">
+            <h5 class="fw-bold mb-4">💼 Active Job Listings</h5>
+
+            <% if(companyJobs.length === 0) { %>
+                <p style="color:rgba(255,255,255,0.45);">No jobs posted yet.</p>
+            <% } else { %>
+                <div class="row g-3">
+                    <% for(let job of companyJobs) { %>
+                        <div class="col-md-6">
+                            <div style="background:#2c2c2e; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px;">
+                                
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="fw-bold mb-0"><%= job.title %></h6>
+                                    <span class="badge-<%= job.jobType %>"><%= job.jobType %></span>
+                                </div>
+
+                                <p style="color:rgba(255,255,255,0.5); font-size:13px; margin-bottom:4px;">
+                                    📍 <%= job.location %>
+                                </p>
+                                <% if(job.salary) { %>
+                                <p style="color:rgba(255,255,255,0.5); font-size:13px; margin-bottom:10px;">
+                                    💰 <%= job.salary %>
+                                </p>
+                                <% } %>
+
+                                <div class="d-flex justify-content-between align-items-center"
+                                    style="border-top:1px solid rgba(255,255,255,0.06); padding-top:10px;">
+                                    <span style="color:rgba(255,255,255,0.4); font-size:12px;">
+                                        👥 <%= job.applications.length %> applicants
+                                    </span>
+                                    <a href="/jobs/<%= job._id %>"
+                                        style="color:#7aa4f7; font-size:13px; text-decoration:none;">
+                                        View Details →
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+
+        <!-- BACK BUTTON -->
+        <a href="/jobs" 
+            style="color:rgba(255,255,255,0.6); text-decoration:none; font-size:14px;">
+            ← Back to Jobs
+        </a>
+
+    </div>
+</div>

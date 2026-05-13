@@ -1,0 +1,95 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row justify-content-center my-4">
+    <div class="col-md-7">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px;">
+
+            <!-- TOP -->
+            <div class="text-center mb-4">
+                <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+                    style="width:56px; height:56px; background:#e8f0fe; border-radius:50%; font-size:24px;">
+                    ✏️
+                </div>
+                <h3 class="fw-bold mb-1">Edit Job</h3>
+                <p class="text-muted">Update your job listing details</p>
+            </div>
+
+            <form action="/jobs/<%= job._id %>?_method=PUT" method="POST">
+
+                <!-- TITLE -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Job Title</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">💼</span>
+                        <input type="text" name="title"
+                            class="form-control border-start-0 ps-0"
+                            value="<%= job.title %>" required>
+                    </div>
+                </div>
+
+                <!-- LOCATION + TYPE -->
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Location</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">📍</span>
+                            <input type="text" name="location"
+                                class="form-control border-start-0 ps-0"
+                                value="<%= job.location %>" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Job Type</label>
+                        <select name="jobType" class="form-select">
+                            <option value="full-time"  <%= job.jobType === 'full-time'  ? 'selected' : '' %>>Full Time</option>
+                            <option value="part-time"  <%= job.jobType === 'part-time'  ? 'selected' : '' %>>Part Time</option>
+                            <option value="internship" <%= job.jobType === 'internship' ? 'selected' : '' %>>Internship</option>
+                            <option value="remote"     <%= job.jobType === 'remote'     ? 'selected' : '' %>>Remote</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- SALARY -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Salary</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">💰</span>
+                        <input type="text" name="salary"
+                            class="form-control border-start-0 ps-0"
+                            value="<%= job.salary %>">
+                    </div>
+                </div>
+
+                <!-- SKILLS -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Skills Required</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">⚡</span>
+                        <input type="text" name="skillsRequired"
+                            class="form-control border-start-0 ps-0"
+                            value="<%= job.skillsRequired.join(', ') %>">
+                    </div>
+                    <div class="form-text">Separate skills with commas</div>
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Job Description</label>
+                    <textarea name="description" class="form-control"
+                        rows="5" required><%= job.description %></textarea>
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-4 fw-bold">
+                        Update Job ✅
+                    </button>
+                    <a href="/company/dashboard" class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

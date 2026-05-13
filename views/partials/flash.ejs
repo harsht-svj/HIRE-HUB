@@ -1,0 +1,45 @@
+<% if (success && success.length > 0) { %>
+     <div class="container mt-3">
+    <div style="
+        background: #30302E;
+        border: 1px solid grey;
+        color:white;
+        border-radius: 10px;
+        padding: 12px 20px;
+        margin: 12px 0;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;">
+        <span>✅ <%= success %></span>
+        <button onclick="this.parentElement.remove()" 
+            style="background:none; border:none; color:red; font-size:18px; cursor:pointer;">
+            ×
+        </button>
+    </div>
+  </div>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+     <div class="container mt-3">
+    <div style="
+        background: #2a0f0f;
+        border: 1px solid #f09595;
+        color: #f09595;
+        border-radius: 10px;
+        padding: 12px 20px;
+        margin: 12px 0;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;">
+        <span> <%= error %></span>
+        <button onclick="this.parentElement.remove()"
+            style="background:none; border:none; color:#f09595; font-size:18px; cursor:pointer;">
+            ×
+        </button>
+    </div>
+    </div>
+<% } %>
+
+

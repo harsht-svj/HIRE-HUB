@@ -1,0 +1,183 @@
+<% layout('layouts/boilerplate') %>
+<style>
+    .hidden{
+        display: none;
+    }
+</style>
+
+<div class="row justify-content-center my-4 mb-5">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px;">
+
+            <!-- ICON TOP -->
+            <div class="text-center mb-3">
+                <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+                    style="width:56px; height:56px; background:#e8f0fe; border-radius:50%; font-size:24px;">
+                    🚀
+                </div>
+                <h3 class="fw-bold mb-1">Create Account</h3>
+                <p class="text-muted">Join Hire Hub today</p>
+            </div>
+
+            <form action="/register" method="POST" enctype="multipart/form-data">
+
+                <!-- NAME -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Full Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">👤</span>
+                        <input type="text" name="name"
+                            class="form-control border-start-0 ps-0"
+                            placeholder="Your full name" required>
+                    </div>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">✉️</span>
+                        <input type="email" name="email"
+                            class="form-control border-start-0 ps-0"
+                            placeholder="you@example.com" required>
+                    </div>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">🔒</span>
+                        <input type="password" name="password"
+                            class="form-control border-start-0 ps-0"
+                            placeholder="Create a password" required>
+                    </div>
+                </div>
+
+                <!-- ROLE -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Register As</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0">🎭</span>
+                        <select name="role" id="role"
+                            class="form-select border-start-0"
+                            onchange="toggleFields()">
+                            <option value="none" selected>Select Role</option>
+                            <option value="applicant">Applicant</option>
+                            <option value="company">Company</option>
+                        </select>
+                    </div>
+                </div>
+
+              <!-- APPLICANT FIELDS -->
+<div id="applicantDiv" class="hidden">
+    <div class="p-3 mb-3 rounded-3" 
+        style="background: #2c2c2e; border: 1px solid rgba(255,255,255,0.08);">
+        <h6 class="fw-bold mb-3" style="color:#7aa4f7;">👨‍💻 Applicant Details</h6>
+
+
+        <div class="mb-3">
+    <label class="form-label fw-bold">Profile Picture</label>
+    <div class="input-group">
+        <span class="input-group-text">🖼️</span>
+        <input type="file" name="avatar"
+            class="form-control" accept="image/*">
+    </div>
+</div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Resume Link</label>
+            <div class="input-group">
+                <span class="input-group-text">🔗</span>
+                <input type="text" name="resume"
+                    class="form-control"
+                    placeholder="Link to your resume">
+            </div>
+        </div>
+        
+        <div class="mb-1">
+            <label class="form-label fw-bold">Skills</label>
+            <div class="input-group">
+                <span class="input-group-text">⚡</span>
+                <input type="text" name="skills"
+                    class="form-control"
+                    placeholder="e.g. JavaScript, Node.js, MongoDB">
+            </div>
+            <div class="form-text">Separate skills with commas</div>
+        </div>
+    </div>
+</div>
+
+<!-- COMPANY FIELDS -->
+<div id="companyDiv" class="hidden">
+    <div class="p-3 mb-3 rounded-3"
+        style="background: #2c2c2e; border: 1px solid rgba(255,255,255,0.08);">
+        <h6 class="fw-bold mb-3" style="color:#7aa4f7;">🏢 Company Details</h6>
+
+
+        <div class="mb-3">
+    <label class="form-label fw-bold">Company Logo</label>
+    <div class="input-group">
+        <span class="input-group-text">🖼️</span>
+        <input type="file" name="avatar"
+            class="form-control" accept="image/*">
+    </div>
+</div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Company Name</label>
+            <div class="input-group">
+                <span class="input-group-text">🏢</span>
+                <input type="text" name="companyName"
+                    class="form-control"
+                    placeholder="Your company name">
+            </div>
+        </div>
+
+        <div class="mb-1">
+            <label class="form-label fw-bold">Company Website</label>
+            <div class="input-group">
+                <span class="input-group-text">🌐</span>
+                <input type="text" name="companyWebsite"
+                    class="form-control"
+                    placeholder="https://yourcompany.com">
+            </div>
+        </div>
+    </div>
+</div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+                    Create Account 🚀
+                </button>
+
+            </form>
+
+            <!-- DIVIDER -->
+            <div class="d-flex align-items-center my-3">
+                <hr class="flex-grow-1">
+                <span class="px-2 text-muted" style="font-size:13px;">or</span>
+                <hr class="flex-grow-1">
+            </div>
+
+            <div class="text-center">
+                <p class="text-muted mb-0" style="font-size:14px;">Already have an account?
+                    <a href="/login" class="text-primary text-decoration-none fw-bold">Login</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleFields() {
+    const role = document.getElementById("role").value;
+    const applicantDiv = document.getElementById("applicantDiv");
+    const companyDiv = document.getElementById("companyDiv");
+    applicantDiv.classList.add("hidden");
+    companyDiv.classList.add("hidden");
+    if (role === "applicant") applicantDiv.classList.remove("hidden");
+    else if (role === "company") companyDiv.classList.remove("hidden");
+}
+window.onload = toggleFields;
+</script>

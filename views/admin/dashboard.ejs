@@ -1,0 +1,145 @@
+<% layout('layouts/boilerplate') %>
+<style>
+    .table { background: #1c1c1e !important; }
+    .table tbody tr { background: #1c1c1e !important; }
+    .table tbody td { background: #1c1c1e !important; color: #fff !important; }
+    .table thead th { 
+        background: #2c2c2e !important; 
+        color: rgba(255,255,255,0.7) !important; 
+        border-color: rgba(255,255,255,0.06) !important;
+    }
+    .table td { border-color: rgba(255,255,255,0.06) !important; }
+    .table-hover tbody tr:hover td { background: rgba(255,255,255,0.03) !important; }
+</style>
+
+<!-- STATS ROW -->
+<div class="my-4">
+    <h2 class="fw-bold mb-1">Admin Dashboard</h2>
+    <p style="color:rgba(255,255,255,0.45);">Welcome, <%= currUser.name %>! Here's your platform overview.</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="p-4 text-center" style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:12px;">
+            <h2 style="color:#7aa4f7; font-weight:700;"><%= totalUsers %></h2>
+            <p style="color:rgba(255,255,255,0.45); margin:0;">Total Users</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="p-4 text-center" style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:12px;">
+            <h2 style="color:#5dcaa5; font-weight:700;"><%= totalJobs %></h2>
+            <p style="color:rgba(255,255,255,0.45); margin:0;">Total Jobs</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="p-4 text-center" style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:12px;">
+            <h2 style="color:#f0b35b; font-weight:700;"><%= totalApplications %></h2>
+            <p style="color:rgba(255,255,255,0.45); margin:0;">Total Applications</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="p-4 text-center" style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:12px;">
+            <h2 style="color:#d48fb0; font-weight:700;"><%= companies.length %></h2>
+            <p style="color:rgba(255,255,255,0.45); margin:0;">Companies</p>
+        </div>
+    </div>
+</div>
+
+<!-- ALL USERS TABLE -->
+<div class="p-4 mb-4" style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:12px;">
+    <h5 class="fw-bold mb-3">👥 All Users</h5>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Avatar</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let user of users) { %>
+                    <% if(user.role !== 'admin') { %>
+                    <tr>
+                        <td>
+                            <img src="<%= user.avatar || 'https://res.cloudinary.com/demo/image/upload/v1/samples/people/smiling-man.jpg' %>"
+                                style="width:36px; height:36px; border-radius:8px; object-fit:cover;">
+                        </td>
+                        <td class="fw-bold"><%= user.name %></td>
+                        <td style="color:rgba(255,255,255,0.5);"><%= user.email %></td>
+                        <td>
+                            <% if(user.role === 'company') { %>
+                                <span style="background:#1a2a4a; color:#7aa4f7; padding:3px 10px; border-radius:20px; font-size:12px;">Company</span>
+                            <% } else { %>
+                                <span style="background:#0f2a1e; color:#5dcaa5; padding:3px 10px; border-radius:20px; font-size:12px;">Applicant</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <form action="/admin/users/<%= user._id %>?_method=DELETE" method="POST"
+                                onsubmit="return confirm('Delete this user?')"
+                                style="margin:0;">
+                                <button type="submit" class="btn btn-sm"
+                                    style="background:#2a0f0f; color:#f09595; border:1px solid #f09595; border-radius:8px;">
+                                    🗑️ Remove User
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% } %>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ALL JOBS TABLE -->
+<div class="p-4 mb-4" style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:12px;">
+    <h5 class="fw-bold mb-3">💼 All Jobs</h5>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Company</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Applicants</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let job of jobs) { %>
+                    <tr>
+                        <td class="fw-bold">
+    <a href="/jobs/<%= job._id %>" 
+        style="color:#7aa4f7; text-decoration:none;">
+        <%= job.title %>
+    </a>
+</td>
+                     
+                        <td style="color:rgba(255,255,255,0.5);"><%= job.postedBy.companyName %></td>
+                        <td style="color:rgba(255,255,255,0.5);">📍 <%= job.location %></td>
+                        <td>
+                            <span class="badge-<%= job.jobType %>"><%= job.jobType %></span>
+                        </td>
+                        <td style="color:rgba(255,255,255,0.5);">
+                            👥 <%= job.applications.length %>
+                        </td>
+                        <td>
+                            <form action="/admin/jobs/<%= job._id %>?_method=DELETE" method="POST"
+                                onsubmit="return confirm('Delete this job?')"
+                                style="margin:0;">
+                                <button type="submit" class="btn btn-sm"
+                                    style="background:#2a0f0f; color:#f09595; border:1px solid #f09595; border-radius:8px;">
+                                    🗑️ Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

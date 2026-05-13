@@ -1,0 +1,98 @@
+<nav class="navbar navbar-expand-lg sticky-top" 
+    style="background: #0f0f1a; border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <div class="container">
+
+        
+        <!-- LOGO -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+            <div style="width:32px; height:32px; background:#4f6ef7; border-radius:8px; 
+                display:flex; align-items:center; justify-content:center; font-size:16px;">
+                💼
+            </div>
+            <span class="fw-bold" style="color:#fff; font-size:18px;">Hire Hub</span>
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" 
+            data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center gap-1">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/jobs"
+                        style="color:rgba(255,255,255,0.7); font-size:14px;">
+                        Browse Jobs
+                    </a>
+                </li>
+
+                <% if (!currUser) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login"
+                            style="color:rgba(255,255,255,0.7); font-size:14px;">
+                            Login
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a href="/register" class="btn btn-outline-light btn-sm px-3 py-2"
+                             color:#fff; border-radius:8px; font-size:14px;>
+                            Register
+                        </a>
+                    </li>
+
+                <% } else if (currUser.role === 'company') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/company/dashboard"
+                            style="color:rgba(255,255,255,0.7); font-size:14px;">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/jobs/new"
+                            style="color:rgba(255,255,255,0.7); font-size:14px;">
+                            Post Job
+                        </a>
+                    </li>
+                   
+ 
+                    <li class="nav-item ms-2">
+                        <a href="/logout" class="btn btn-sm px-3 py-2"
+                            style="border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:8px; font-size:14px;">
+                            Logout
+                        </a>
+                    </li>
+
+                <% } else if (currUser.role === 'applicant') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/applicant/dashboard"
+                            style="color:rgba(255,255,255,0.7); font-size:14px;">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a href="/logout" class="btn btn-sm px-3 py-2"
+                            style="border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:8px; font-size:14px;">
+                            Logout
+                        </a>
+                    </li>
+                <% }  else if(currUser.role === 'admin') { %>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/dashboard"
+            style="color:rgba(255,255,255,0.7); font-size:14px;">
+            Admin Dashboard
+        </a>
+    </li>
+    <li class="nav-item ms-2">
+        <a href="/logout" class="btn btn-sm px-3 py-2"
+            style="border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:8px; font-size:14px;">
+            Logout
+        </a>
+    </li>
+<% } %>%>
+                
+
+            </ul>
+        </div>
+    </div>
+</nav>

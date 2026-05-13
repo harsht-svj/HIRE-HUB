@@ -1,0 +1,155 @@
+<% layout('layouts/boilerplate') %>
+<style>
+    .Apply h3 {
+        font-weight: 700;
+        font-size: 24px;
+    }
+</style>
+
+<!-- PROFILE HEADER -->
+<div class="my-4 p-4" style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:16px;">
+    <div class="d-flex align-items-center gap-4">
+        <img src="<%= currUser.avatar || 'https://res.cloudinary.com/demo/image/upload/v1/samples/people/smiling-man.jpg' %>" 
+            style="width:170px; height:180px; border-radius:12px; object-fit:cover; border:2px solid #4f6ef7;">
+        <div>
+            <h2 class="fw-bold mb-1"><%= currUser.name %></h2>
+            <p style="color:#7aa4f7; margin-bottom:12px; font-size:14px;">👨‍💻 Applicant</p>
+            <div class="d-flex gap-4">
+                <div>
+                    <p style="color:rgba(255,255,255,0.4); font-size:12px; margin-bottom:2px;">Applications</p>
+                    <p style="color:#fff; font-weight:600; margin:0;"><%= jobs.length %></p>
+                </div>
+                <div>
+                    <p style="color:rgba(255,255,255,0.4); font-size:12px; margin-bottom:2px;">Skills</p>
+                    <p style="color:#fff; font-weight:600; margin:0;"><%= currUser.skills ? currUser.skills.length : 0 %></p>
+                </div>
+                <div>
+                    <p style="color:rgba(255,255,255,0.4); font-size:12px; margin-bottom:2px;">Email</p>
+                    <p style="color:#fff; font-weight:600; margin:0; font-size:13px;"><%= currUser.email %></p>
+                </div>
+            </div>
+            <% if(currUser.skills && currUser.skills.length > 0) { %>
+                <div class="d-flex flex-wrap gap-1 mt-3">
+                    <% for(let skill of currUser.skills) { %>
+                        <span class="skill-tag"><%= skill %></span>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<!-- APPLIED JOBS -->
+<% if(jobs.length === 0) { %>
+    <div class="text-center py-5">
+        <h4 class="text-muted">You haven't applied to any jobs yet</h4>
+        <a href="/jobs" class="btn btn-primary mt-3">Browse Jobs</a>
+    </div>
+<% } else { %>
+    <div class="Apply"><h3>Applied Jobs:</h3></div>
+    <div class="row g-4 mb-5">
+        <% for(let job of jobs) { %>
+            <%
+                let myApplication = job.applications.find(
+                    app => app.applicant.toString() === currUser._id.toString()
+                );
+            %>
+            <div class="col-md-6">
+                <div class="job-card h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="fw-bold mb-0"><%= job.title %></h5>
+                        <span class="badge-status-<%= myApplication.status %>">
+                            <%= myApplication.status %>
+                        </span>
+                    </div>
+                    <p class="text-muted mb-1">🏢 <%= job.postedBy.companyName %></p>
+                    <p class="text-muted mb-1">📍 <%= job.location %></p>
+                    <p class="text-muted mb-3">🗓 Applied: <%= myApplication.appliedAt.toDateString() %></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="/jobs/<%= job._id %>" class="btn btn-sm"
+                            style="border:1px solid #4f6ef7; color:#4f6ef7; border-radius:8px;">
+                            View Job →
+                        </a>
+                        <form action="/jobs/<%= job._id %>/withdraw?_method=DELETE" method="POST"
+                            onsubmit="return confirm('Withdraw application?')"
+                            style="margin:0;">
+                            <button type="submit" class="btn btn-sm"
+                                style="background:#2a0f0f; color:#f09595; border:1px solid #f09595; border-radius:8px;">
+                                Withdraw ✕
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+    <!-- RECOMMENDED JOBS -->
+    <% if(recommendedJobs && recommendedJobs.length > 0) { %>
+    <div class="mb-4">
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <h5 class="fw-bold mb-0">⚡ Recommended For You</h5>
+            <span style="color:rgba(255,255,255,0.4); font-size:13px;">based on your skills</span>
+        </div>
+        <div class="row g-3">
+            <% for(let job of recommendedJobs) { %>
+                <div class="col-md-4">
+                    <div style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08);
+                        border-radius:12px; padding:14px; height:100%;"
+                        onmouseover="this.style.borderColor='#5dcaa5'; this.style.transform='translateY(-2px)'"
+                        onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.transform='translateY(0)'">
+
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="fw-bold mb-0" style="font-size:14px;"><%= job.title %></h6>
+                            <span class="badge-<%= job.jobType %>" style="font-size:11px; white-space:nowrap;">
+                                <%= job.jobType %>
+                            </span>
+                        </div>
+
+                        <p style="color:rgba(255,255,255,0.5); font-size:12px; margin-bottom:2px;">
+                            🏢 <%= job.postedBy.companyName %>
+                        </p>
+                        <p style="color:rgba(255,255,255,0.5); font-size:12px; margin-bottom:10px;">
+                            📍 <%= job.location %>
+                        </p>
+
+                        <div class="d-flex flex-wrap gap-1 mb-3">
+                            <% for(let skill of job.skillsRequired.slice(0,3)) { %>
+                                <span style="
+                                    background:<%= currUser.skills && currUser.skills.map(s=>s.toLowerCase()).includes(skill.toLowerCase()) ? '#0f2a1e' : '#2c2c2e' %>;
+                                    color:<%= currUser.skills && currUser.skills.map(s=>s.toLowerCase()).includes(skill.toLowerCase()) ? '#5dcaa5' : 'rgba(255,255,255,0.4)' %>;
+                                    border:1px solid <%= currUser.skills && currUser.skills.map(s=>s.toLowerCase()).includes(skill.toLowerCase()) ? '#5dcaa5' : 'rgba(255,255,255,0.06)' %>;
+                                    padding:2px 8px; border-radius:4px; font-size:11px;">
+                                    <%= skill %>
+                                </span>
+                            <% } %>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center"
+                            style="border-top:1px solid rgba(255,255,255,0.06); padding-top:10px;">
+                            <% if(job.salary) { %>
+                                <span style="color:#f0b35b; font-size:12px; font-weight:600;">
+                                    💰 <%= job.salary %>
+                                </span>
+                            <% } else { %>
+                                <span></span>
+                            <% } %>
+                            <a href="/jobs/<%= job._id %>"
+                                style="color:#5dcaa5; font-size:12px; text-decoration:none; font-weight:500;">
+                                View →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+    <hr style="border-color:rgba(255,255,255,0.08); margin-bottom:24px;">
+    <% } %>
+
+    <div class="text-center mt-3">
+        <a href="/jobs" class="btn btn-primary">Browse More Jobs</a>
+    </div>
+<% } %>

@@ -1,0 +1,170 @@
+body {
+    background-color: #0d0d0d;
+    color: #fff;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #0d0d0d !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* HERO - blue kept */
+.hero-section {
+    background: #16213e !important;
+    border-radius: 12px;
+    padding: 80px 24px;
+    text-align: center;
+    margin: 20px 0;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+.hero-section h1 { color: #fff; font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; }
+.hero-section p  { color: rgba(255,255,255,0.6); font-size: 1.1rem; max-width: 500px; margin: 0 auto 28px; }
+
+/* STAT CARDS */
+.stat-card {
+    background: #1c1c1e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+}
+.stat-card p { color: rgba(255,255,255,0.5); margin: 0; }
+
+/* STEP CARDS */
+.step-card {
+    background: #1c1c1e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 28px;
+    text-align: center;
+    height: 100%;
+}
+.step-card h5 { color: #fff; font-weight: 600; margin-bottom: 8px; }
+.step-card p  { color: rgba(255,255,255,0.5); font-size: 0.9rem; margin: 0; }
+
+/* CTA */
+.cta-section {
+    background: #1c1c1e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 48px 24px;
+    text-align: center;
+    margin: 20px 0;
+}
+.cta-section h3 { color: #fff; font-weight: 700; margin-bottom: 8px; }
+.cta-section p  { color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+
+/* JOB CARDS */
+.job-card {
+    background: #1c1c1e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+    height: 100%;
+}
+.job-card:hover {
+    border-color: #4f6ef7;
+    transform: translateY(-2px);
+}
+
+/* AUTH CARDS */
+.card {
+    background: #1c1c1e !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    color: #fff !important;
+}
+
+/* FORM CONTROLS */
+.form-control, .form-select {
+    background: #2c2c2e !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    color: #fff !important;
+}
+.form-control::placeholder { color: rgba(255,255,255,0.3) !important; }
+.form-control:focus, .form-select:focus {
+    border-color: #4f6ef7 !important;
+    box-shadow: 0 0 0 3px rgba(79,110,247,0.15) !important;
+    background: #2c2c2e !important;
+    color: #fff !important;
+}
+
+/* INPUT GROUP */
+.input-group-text {
+    background: #2c2c2e !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    color: rgba(255,255,255,0.5) !important;
+}
+
+/* SEARCH BOX */
+.search-box {
+    background: #1c1c1e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    color: #fff;
+}
+.search-box:focus {
+    border-color: #4f6ef7;
+    box-shadow: 0 0 0 3px rgba(79,110,247,0.15);
+}
+.search-box::placeholder { color: rgba(255,255,255,0.3); }
+
+/* FILTER CHIPS */
+.filter-chip {
+    background: #1c1c1e;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.filter-chip:hover  { border-color: #4f6ef7; color: #4f6ef7; }
+.filter-chip.active { background: #1a2a4a; border-color: #4f6ef7; color: #7aa4f7; font-weight: 500; }
+
+/* SKILL TAGS */
+.skill-tag {
+    background: #2c2c2e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+}
+
+/* JOB TYPE BADGES */
+.badge-full-time  { background: #1a2a4a; color: #7aa4f7; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+.badge-part-time  { background: #2a1a2e; color: #d48fb0; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+.badge-internship { background: #0f2a1e; color: #5dcaa5; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+.badge-remote     { background: #2a1f0f; color: #f0b35b; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+
+/* STATUS BADGES */
+.badge-status-pending  { background: #2a2010; color: #f0b35b; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+.badge-status-accepted { background: #0f2a1e; color: #5dcaa5; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+.badge-status-rejected { background: #2a0f0f; color: #f09595; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+
+/* TABLE */
+.table { color: #fff !important; }
+.table-light th { background: #2c2c2e !important; color: rgba(255,255,255,0.7) !important; }
+.table td, .table th { border-color: rgba(255,255,255,0.06) !important; }
+.table-hover tbody tr:hover { background: rgba(255,255,255,0.03) !important; }
+
+/* FOOTER */
+footer {
+    background: #0d0d0d !important;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.3) !important;
+}
+
+/* TEXT */
+.text-muted { color: rgba(255,255,255,0.45) !important; }
+.form-text  { color: rgba(255,255,255,0.35) !important; }
+.form-label { color: rgba(255,255,255,0.85) !important; }
+h2, h3, h4, h5 { color: #fff !important; }

@@ -1,0 +1,60 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row justify-content-center my-4">
+    <div class="col-md-7">
+
+        <!-- PROFILE CARD -->
+        <div class="p-4 mb-4" style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:16px;">
+            <div class="d-flex align-items-center gap-4">
+                <img src="<%= applicant.avatar || 'https://res.cloudinary.com/demo/image/upload/v1/samples/people/smiling-man.jpg' %>"
+                    style="width:110px; height:110px; border-radius:12px; object-fit:cover; border:2px solid #4f6ef7;">
+                <div>
+                    <h2 class="fw-bold mb-1"><%= applicant.name %></h2>
+                    <p style="color:#7aa4f7; font-size:14px; margin-bottom:12px;">👨‍💻 Applicant</p>
+                    <div class="d-flex gap-4">
+                        <div>
+                            <p style="color:rgba(255,255,255,0.4); font-size:12px; margin-bottom:2px;">Email</p>
+                            <p style="color:#fff; font-size:13px; margin:0;"><%= applicant.email %></p>
+                        </div>
+                        <div>
+                            <p style="color:rgba(255,255,255,0.4); font-size:12px; margin-bottom:2px;">Skills</p>
+                            <p style="color:#fff; font-weight:600; margin:0;"><%= applicant.skills ? applicant.skills.length : 0 %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SKILLS CARD -->
+        <% if(applicant.skills && applicant.skills.length > 0) { %>
+        <div class="p-4 mb-4" style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:16px;">
+            <h5 class="fw-bold mb-3">⚡ Skills</h5>
+            <div class="d-flex flex-wrap gap-2">
+                <% for(let skill of applicant.skills) { %>
+                    <span class="skill-tag"><%= skill %></span>
+                <% } %>
+            </div>
+        </div>
+        <% } %>
+
+        <!-- RESUME CARD -->
+        <% if(applicant.resume) { %>
+        <div class="p-4 mb-4" style="background:#1c1c1e; border:1px solid rgba(255,255,255,0.08); border-radius:16px;">
+            <h5 class="fw-bold mb-3">📄 Resume</h5>
+            <a href="<%= applicant.resume %>" target="_blank"
+                class="btn px-4"
+                style="background:#4f6ef7; color:#fff; border:none; border-radius:8px;">
+                View Resume →
+            </a>
+        </div>
+        <% } %>
+
+        <!-- BACK BUTTON -->
+        <a href="/company/dashboard" 
+            class="btn px-4"
+            style="background:transparent; color:rgba(255,255,255,0.6); border:1px solid rgba(255,255,255,0.15); border-radius:8px;">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+</div>
