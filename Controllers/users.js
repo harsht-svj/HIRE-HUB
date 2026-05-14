@@ -13,9 +13,8 @@ module.exports.RegisterPost = async (req, res, next) => {
     if (skills) skills = skills.split(',').map(s => s.trim());
 
         // ✅ version 2.x uses secure_url not path
-    const avatar = req.file ? req.file.secure_url 
-        : 'https://res.cloudinary.com/demo/image/upload/v1/samples/people/smiling-man.jpg';
-
+  const avatar = req.file ? req.file.path 
+    : 'https://res.cloudinary.com/demo/image/upload/v1/samples/people/smiling-man.jpg';
     let newUser = new User({
         name, email, role,
         companyWebsite, companyName,
