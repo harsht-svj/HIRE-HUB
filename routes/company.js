@@ -6,6 +6,7 @@ const { isLogged, iscompany } = require('../middleware.js');
 const wrapasync = require('../utils/wrapasync.js');
 const ExpressError = require('../utils/ExpressError.js');
 const ControllerCompany= require('../Controllers/company.js');
+const multer = require('../utils/multer.js');
 
 //COMPANY DASHBOARD 
 router.get("/company/dashboard",isLogged,iscompany,wrapasync(ControllerCompany.CompanyDashBoard));
@@ -21,5 +22,14 @@ router.delete("/jobs/:id",isLogged,iscompany,wrapasync(ControllerCompany.DeleteJ
 
 //COMPANY -ACCEPT OR REJECT THE STATUS FOR AN APPLICANT 
 router.post('/jobs/:jobId/applications/:applicantId/status',isLogged,iscompany,wrapasync(ControllerCompany.UpdateStatus));
+
+
+//comany PROFILE EDIT PAGE 
+router.get('/company/:id/edit', isLogged, iscompany, wrapasync(ControllerCompany.editProfileGet));
+
+router.put('/company/:id', isLogged, iscompany, multer.single('avatar'), wrapasync(ControllerCompany.editProfilePut));
+
+
+
 
 module.exports=router;

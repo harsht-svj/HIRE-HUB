@@ -1,0 +1,78 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row justify-content-center my-4">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-4" style="border-radius:16px;">
+
+            <!-- TOP -->
+            <div class="text-center mb-4">
+                <img src="<%= applicant.avatar || 'https://res.cloudinary.com/demo/image/upload/v1/samples/people/smiling-man.jpg' %>"
+                    style="width:100px; height:100px; border-radius:12px; object-fit:cover; border:2px solid #4f6ef7;">
+                <h3 class="fw-bold mt-3 mb-1">Edit Profile</h3>
+                <p class="text-muted">Update your applicant details</p>
+            </div>
+
+            <form action="/applicant/<%= applicant._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+
+                <!-- HIDDEN EXISTING AVATAR -->
+                <input type="hidden" name="existingAvatar" value="<%= applicant.avatar %>">
+
+                <!-- NAME -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Full Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text">👤</span>
+                        <input type="text" name="name" class="form-control"
+                            value="<%= applicant.name %>" required>
+                    </div>
+                </div>
+
+                <!-- AVATAR -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Profile Picture</label>
+                    <div class="input-group">
+                        <span class="input-group-text">🖼️</span>
+                        <input type="file" name="avatar" class="form-control" accept="image/*">
+                    </div>
+                    <div class="form-text">Leave empty to keep current picture</div>
+                </div>
+
+                <!-- SKILLS -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Skills</label>
+                    <div class="input-group">
+                        <span class="input-group-text">⚡</span>
+                        <input type="text" name="skills" class="form-control"
+                            value="<%= applicant.skills ? applicant.skills.join(', ') : '' %>"
+                            placeholder="e.g. JavaScript, Node.js, MongoDB">
+                    </div>
+                    <div class="form-text">Separate skills with commas</div>
+                </div>
+
+                <!-- RESUME -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Resume Link</label>
+                    <div class="input-group">
+                        <span class="input-group-text">🔗</span>
+                        <input type="text" name="resume" class="form-control"
+                            value="<%= applicant.resume || '' %>"
+                            placeholder="Link to your resume">
+                    </div>
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn px-4 fw-bold"
+                        style="background:#4f6ef7; color:#fff; border:none; border-radius:8px;">
+                        Save Changes ✅
+                    </button>
+                    <a href="/applicant/dashboard" class="btn px-4"
+                        style="background:transparent; color:rgba(255,255,255,0.6); border:1px solid rgba(255,255,255,0.15); border-radius:8px;">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

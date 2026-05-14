@@ -60,3 +60,30 @@ module.exports.withdrawApplication = async (req, res) => {
     req.flash('success', 'Application withdrawn successfully!');
     res.redirect('/applicant/dashboard');
 };
+
+
+// GET ROUTE FOR EDIT FORM RENDER:
+module.exports.editProfileGet = async (req, res) => {
+    const applicant = await User.findById(req.params.id);
+    if (!applicant) throw new ExpressError(404, 'Applicant not found!');
+    res.render('./applicant/edit.ejs', { applicant });
+};
+
+module.exports.editProfilePut = async (req, res) => {
+    const { id } = req.params;
+    let { name, skills, resume } = req.body;
+
+    if (skills) skills = skills.split(',').map(s => s.trim());
+
+    const avatar = req.file ? req.file.path : req.body.existingAvatar;
+
+    await User.findByIdAndUpdate(id, {
+        name,
+        skills,
+        resume,
+        avatar,
+    });
+
+    req.flash('success', 'Profile updated successfully!');
+    res.redirect('/applicant/dashboard');
+};

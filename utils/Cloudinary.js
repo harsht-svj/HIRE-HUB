@@ -1,5 +1,4 @@
 const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary'); // ✅ destructure it
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -7,12 +6,24 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {                          // ✅ v2 uses 'params', not direct 'folder'
-        folder: 'hirehub',
-        allowed_formats: ['jpg', 'jpeg', 'png'],
-    },
-});
+let storage;
+
+try {
+    const { CloudinaryStorage } = require('multer-storage-cloudinary');
+    storage = new CloudinaryStorage({
+        cloudinary,
+        params: {
+            folder: 'hirehub',
+            allowed_formats: ['jpg', 'jpeg', 'png'],
+        },
+    });
+} catch {
+    // fallback for local dev - use disk storage
+    const multer = require('multer');
+    storage = multer.diskStorage({
+        destination: './public/uploads/',
+        filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
+    });
+}
 
 module.exports = { cloudinary, storage };
