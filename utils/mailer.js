@@ -48,3 +48,12 @@ module.exports.sendStatusEmail = async (toEmail, replyToEmail, applicantName, jo
         `,
     });
 };
+
+// Add this at the bottom of mailer.js
+transporter.verify((error, success) => {
+    if (error) {
+        console.log('Mailer error:', error);
+    } else {
+        console.log('Mailer ready ✅');
+    }
+});
